@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love You Chanu 💕</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="container">
+        <button class="click-button" id="clickBtn">Click Here ❤️</button>
+        
+        <div class="animation-container" id="animationContainer">
+            <div class="content-wrapper" id="contentWrapper">
+                <div class="panda-heart-container">
+                    <!-- Heart behind (z-index: 1) - 4cm higher, bottom V at panda's middle -->
+                    <div class="heart-container">
+                        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <!-- Heart clip path for the photo -->
+                                <clipPath id="heartClip">
+                                    <path d="M200,350 C200,350 350,250 350,150 C350,80 310,40 260,40 C230,40 210,60 200,80 C190,60 170,40 140,40 C90,40 50,80 50,150 C50,250 200,350 200,350 Z"/>
+                                </clipPath>
+                            </defs>
+
+                            <!-- Heart outline - stays visible with red fill -->
+                            <path id="heartOutline" class="heart-outline" 
+                                  d="M200,350 C200,350 350,250 350,150 C350,80 310,40 260,40 C230,40 210,60 200,80 C190,60 170,40 140,40 C90,40 50,80 50,150 C50,250 200,350 200,350 Z"/>
+                            
+                            <!-- Couple photo inside heart - appears on top of red heart -->
+                            <image id="heartPhoto" class="heart-photo" 
+                                   href="love.jpeg" 
+                                   x="50" y="40" 
+                                   width="300" height="310" 
+                                   clip-path="url(#heartClip)" 
+                                   preserveAspectRatio="xMidYMid slice"/>
+                        </svg>
+                    </div>
+
+                    <!-- Panda Image on top (z-index: 2) - positioned so it sits in front of heart -->
+                    <img src="panda.png" alt="Pandas" class="panda-image" id="pandaImage">
+                </div>
+
+                <div class="love-text" id="loveText">𝐿𝑜𝓋𝑒 𝓎𝑜𝓊 𝒞𝒽𝒶𝓃𝓊 💕</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,526 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 50%, #ff69b4 100%);
+    position: relative;
+}
+
+/* Floating hearts background */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.3);
+    animation: float 15s infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    padding: 20px;
+    max-width: 100%;
+    width: 100%;
+}
+
+.click-button {
+    background: linear-gradient(45deg, #ff1744, #f50057);
+    color: white;
+    border: none;
+    padding: 20px 50px;
+    font-size: 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 23, 68, 0.4);
+    transition: all 0.3s ease;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.click-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
+}
+
+.click-button:active {
+    transform: scale(0.95);
+}
+
+.click-button.hidden {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+        pointer-events: none;
+    }
+}
+
+.animation-container {
+    display: none;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.animation-container.active {
+    display: block;
+    animation: containerFadeIn 0.5s forwards;
+}
+
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Main content wrapper */
+.content-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Panda and Heart Container */
+.panda-heart-container {
+    position: relative;
+    width: 360px;
+    height: 540px;
+    margin: 0 auto;
+}
+
+/* Heart SVG Container - positioned behind panda, 4cm higher */
+.heart-container {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    z-index: 1;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Heart outline and fill animation - fills while drawing */
+.heart-outline {
+    stroke: #ff1744;
+    stroke-width: 6;
+    fill: #ff1744;
+    fill-opacity: 0.95;
+    filter: drop-shadow(0 0 10px rgba(255, 23, 68, 0.5));
+}
+
+/* Couple photo inside heart - fades from 0 to 80% opacity */
+.heart-photo {
+    opacity: 0;
+}
+
+.heart-photo.show {
+    animation: showPhotoSmooth 2s 6.5s forwards;
+}
+
+@keyframes showPhotoSmooth {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+/* Panda Image - positioned in front of heart */
+.panda-image {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 360px;
+    height: 360px;
+    z-index: 2;
+    opacity: 0;
+}
+
+.panda-image.show {
+    animation: pandaAppear 2s forwards;
+}
+
+@keyframes pandaAppear {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5) rotate(-10deg);
+    }
+    60% {
+        transform: translateX(-50%) scale(1.05) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) rotate(0deg);
+    }
+}
+
+/* Love text - positioned below panda - STAYS VISIBLE */
+.love-text {
+    font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 
+        0 0 20px rgba(255, 23, 68, 0.9),
+        0 0 40px rgba(255, 23, 68, 0.7),
+        0 0 60px rgba(255, 23, 68, 0.5),
+        3px 3px 6px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    opacity: 0;
+    letter-spacing: 2px;
+    font-weight: bold;
+    position: relative;
+    z-index: 4;
+}
+
+.love-text.show {
+    animation: textAppearSmooth 2s 2s forwards;
+}
+
+@keyframes textAppearSmooth {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sparkle effect */
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow: 0 0 10px white;
+}
+
+.sparkle.active {
+    animation: sparkleAnim 2s infinite;
+}
+
+@keyframes sparkleAnim {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+/* Pulse effect for heart */
+.heart-outline.pulse {
+    animation: heartPulse 1.5s infinite;
+}
+
+@keyframes heartPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Glow effect around everything at the end */
+.content-wrapper.glow {
+    animation: glowEffect 3s infinite alternate;
+}
+
+@keyframes glowEffect {
+    from {
+        filter: drop-shadow(0 0 20px rgba(255, 23, 68, 0.4));
+    }
+    to {
+        filter: drop-shadow(0 0 40px rgba(255, 23, 68, 0.8));
+    }
+}
+
+/* Particles */
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #fff 0%, #ff1744 100%);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.particle.active {
+    animation: particleFloat 4s infinite;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(0) translateX(0) scale(0);
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-200px) translateX(var(--tx)) scale(1.5);
+    }
+}
+
+/* Responsive design - Mobile optimized */
+@media (max-width: 600px) {
+    .panda-heart-container {
+        width: 90vw;
+        max-width: 350px;
+        height: 500px;
+    }
+
+    .panda-image {
+        width: 90vw;
+        max-width: 350px;
+        height: auto;
+        aspect-ratio: 1;
+        top: 120px;
+    }
+
+    .heart-container {
+        top: -30px;
+        width: 95vw;
+        max-width: 380px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .click-button {
+        padding: 16px 40px;
+        font-size: 20px;
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .love-text {
+        font-size: 40px;
+        margin-top: 15px;
+        padding: 0 10px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .animation-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .panda-heart-container {
+        width: 85vw;
+        max-width: 300px;
+        height: 440px;
+    }
+
+    .panda-image {
+        width: 85vw;
+        max-width: 300px;
+        height: auto;
+        aspect-ratio: 1;
+        top: 105px;
+    }
+
+    .heart-container {
+        top: -25px;
+        width: 90vw;
+        max-width: 340px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .love-text {
+        font-size: 36px;
+        margin-top: 12px;
+        padding: 0 8px;
+    }
+
+    .click-button {
+        padding: 14px 35px;
+        font-size: 18px;
+        width: 85%;
+    }
+}
+
+@media (max-width: 360px) {
+    .panda-heart-container {
+        width: 80vw;
+        max-width: 280px;
+        height: 400px;
+    }
+
+    .panda-image {
+        width: 80vw;
+        max-width: 280px;
+        height: auto;
+        aspect-ratio: 1;
+        top: 95px;
+    }
+
+    .heart-container {
+        top: -22px;
+        width: 85vw;
+        max-width: 310px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .love-text {
+        font-size: 32px;
+        margin-top: 10px;
+        padding: 0 5px;
+    }
+
+    .click-button {
+        padding: 12px 28px;
+        font-size: 16px;
+        width: 90%;
+    }
+}
+
+@media (max-width: 320px) {
+    .panda-heart-container {
+        width: 75vw;
+        max-width: 240px;
+        height: 360px;
+    }
+
+    .panda-image {
+        width: 75vw;
+        max-width: 240px;
+        height: auto;
+        aspect-ratio: 1;
+        top: 85px;
+    }
+
+    .heart-container {
+        top: -20px;
+        width: 80vw;
+        max-width: 270px;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .love-text {
+        font-size: 28px;
+        margin-top: 8px;
+        padding: 0 5px;
+    }
+
+    .click-button {
+        padding: 10px 25px;
+        font-size: 15px;
+        width: 95%;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-height: 600px) and (orientation: landscape) {
+    .panda-heart-container {
+        width: 50vh;
+        height: 75vh;
+    }
+
+    .panda-image {
+        width: 50vh;
+        height: 50vh;
+        top: 15vh;
+    }
+
+    .heart-container {
+        width: 60vh;
+        height: 60vh;
+        top: -5vh;
+    }
+
+    .love-text {
+        font-size: 5vh;
+        margin-top: 2vh;
+    }
+
+    .click-button {
+        padding: 2vh 5vh;
+        font-size: 3vh;
+    }
+}
+
+/* Extra animations for richness */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
